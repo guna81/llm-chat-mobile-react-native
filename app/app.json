@@ -1,0 +1,52 @@
+{
+  "expo": {
+    "name": "LLM Chat",
+    "slug": "llm-chat",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.guna81.chatwithdata"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.guna81.chatwithdata"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-font"
+      ],
+
+      "@react-native-voice/voice",
+
+      ["expo-camera",
+        {
+          "cameraPermission": "Allow my app to access your camera",
+          "microphonePermission": "Allow my app to access your microphone",
+          "recordAudioAndroid": true
+        }]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "7e94e2fa-8428-476b-b4ee-7939c9ff5872"
+      }
+    },
+    "owner": "guna810"
+  }
+}
