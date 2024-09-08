@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from chat import load_documents, chat
+from chat import file_upload, chat
 
 from flask_cors import CORS
 
@@ -12,12 +12,11 @@ def index():
     return "Hello, World!"
 
 
-@app.route("/load-docs", methods=["POST"])
+@app.route("/file-upload", methods=["POST"])
 def load_docs_api():
     try:
-        # Get user message from the request body
         files = request.files['files']
-        result = load_documents(files)
+        result = file_upload(files)
 
         return jsonify({
             "data": result
@@ -28,12 +27,12 @@ def load_docs_api():
             "error": True
         })
 
-@app.route("/qa", methods=["POST"])
+@app.route("/chat", methods=["POST"])
 def chat_api():
     try:
         # Get user message from the request body
-        question = request.form['question']
-        result = chat(question)
+        message = request.json['message']
+        result = chat(message)
         
         return jsonify({
             "data": result
@@ -46,4 +45,4 @@ def chat_api():
     
 
 if __name__ == '__main__':
-  app.run(debug=True, host='0.0.0.0', port=8080)
+  app.run(debug=True, host='0.0.0.0', port=5000)

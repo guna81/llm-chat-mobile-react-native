@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 
-const baseUrl = "http://192.168.29.86:8080"; // process.env.REACT_APP_API_URL;
+const baseUrl = process.env.EXPO_PUBLIC_API_URL;
+
+console.log({ baseUrl });
 
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
