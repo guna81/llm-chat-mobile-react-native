@@ -3,6 +3,8 @@ import os
 from dotenv import load_dotenv
 
 import time
+import json
+
 import google.generativeai as genai
 
 from .config import generation_config
@@ -90,8 +92,15 @@ def gemini_upload(file):
 
 
 def gemini_chat(message):
-  response = chat_session.send_message("INSERT_INPUT_HERE")
-
-  print(response.text)
-
+  response = chat_session.send_message(message)
   return response.text
+
+
+def gemini_chat_stream(message):
+  response = chat_session.send_message(message, stream=True)
+  
+  for chunk in response:
+    data = json.dumps({
+      "data": chunk.text
+    })
+    yield data

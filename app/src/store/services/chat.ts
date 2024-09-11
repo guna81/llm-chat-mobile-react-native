@@ -20,3 +20,22 @@ export const chatApi = api.injectEndpoints({
 });
 
 export const { useChatMutation, useUploadFileMutation } = chatApi;
+
+// chat streaming
+
+export const chatStreamingApi = api.injectEndpoints({
+  endpoints: (builder) => ({
+    chatStreaming: builder.query({
+      query: (body) => ({
+        url: "/chat-streaming",
+        method: "GET",
+        body: body,
+        responseHandler: (res: any) => {
+          return res.body;
+        },
+      }),
+    }),
+  }),
+});
+
+export const { useChatStreamingQuery } = chatStreamingApi;

@@ -41,6 +41,7 @@ const ChatInput = () => {
       };
 
       const result = await trigger(payload).unwrap();
+      console.log({ result });
     } catch (error) {
       console.log({ error });
     }

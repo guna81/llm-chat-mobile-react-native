@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from chat import file_upload, chat
 
 from flask_cors import CORS
@@ -13,7 +13,7 @@ def index():
 
 
 @app.route("/file-upload", methods=["POST"])
-def load_docs_api():
+def file_upload_api():
     try:
         files = request.files['files']
         result = file_upload(files)
@@ -25,23 +25,28 @@ def load_docs_api():
         print("error", e)
         return jsonify({
             "error": True
-        })
+        }), 500
 
 @app.route("/chat", methods=["POST"])
 def chat_api():
     try:
         # Get user message from the request body
-        message = request.json['message']
-        result = chat(message)
-        
-        return jsonify({
-            "data": result
-        }), 200
+        message = request.json.get('message')
+        stream = request.json.get('stream', True)
+
+        result = chat(message, stream)
+
+        if stream:
+            return Response(result, mimetype='application/json')
+        else:
+            return jsonify({
+                "data": result
+            }), 200
     except Exception as e:
         print("error", e)
         return jsonify({
             "error": True
-        })
+        }), 500
     
 
 if __name__ == '__main__':
