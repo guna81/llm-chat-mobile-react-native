@@ -4,7 +4,7 @@ import { darkTheme } from "@/const/theme";
 
 const History = () => {
   return (
-    <View style={styles.historyContainer}>
+    <View>
       <Text style={styles.historyTitle}>History</Text>
     </View>
   );
@@ -13,10 +13,6 @@ const History = () => {
 export default History;
 
 const styles = StyleSheet.create({
-  historyContainer: {
-    flex: 1,
-    width: "100%",
-  },
   historyTitle: {
     color: darkTheme.primaryTextColor,
     fontSize: 18,

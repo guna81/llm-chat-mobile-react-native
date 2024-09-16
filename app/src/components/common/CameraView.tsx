@@ -1,7 +1,12 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React, { useState, useEffect, useRef } from "react";
-import useCamera from "@/hooks/useCamera";
-import { Camera } from "expo-camera";
+// import useCamera from "@/hooks/useCamera";
+// import { Camera } from "expo-camera";
+import {
+  CameraView as Camera,
+  CameraType,
+  useCameraPermissions,
+} from "expo-camera";
 import { Feather } from "@expo/vector-icons";
 import { ICON_SIZE } from "@/const/const";
 import { darkTheme } from "@/const/theme";
@@ -16,12 +21,14 @@ const CameraView = () => {
   const cameraRef = useRef(null);
   const [photoUri, setPhotoUri] = useState(null);
 
-  const { permission, requestPermission, facing, toggleCameraFacing } =
-    useCamera();
+  // const { permission, requestPermission, facing, toggleCameraFacing } =
+  //   useCamera();
+  const [facing, setFacing] = useState<CameraType>("back");
+  const [permission, requestPermission] = useCameraPermissions();
 
-  useEffect(() => {
-    requestPermission();
-  }, []);
+  function toggleCameraFacing() {
+    setFacing((current) => (current === "back" ? "front" : "back"));
+  }
 
   const handleCapturePhoto = async () => {
     try {
@@ -43,6 +50,17 @@ const CameraView = () => {
     setPhotoUri(null);
   };
 
+  useEffect(() => {
+    if (!permission) {
+      requestPermission();
+    }
+  }, [permission]);
+
+  if (!permission) {
+    // Camera permissions are still loading.
+    return <View />;
+  }
+
   return (
     <View style={styles.container}>
       {photoUri && (
@@ -52,7 +70,8 @@ const CameraView = () => {
         />
       )}
       {!photoUri && isFocused && (
-        <Camera ref={cameraRef} style={styles.camera} type={facing}>
+        // <Camera ref={cameraRef} style={styles.camera} type={facing}>
+        <Camera ref={cameraRef} style={styles.camera} facing={facing}>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.button}

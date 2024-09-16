@@ -14,7 +14,7 @@ const Sidebar = (props) => {
           color={darkTheme.secondaryTextColor}
         />
       </View>
-      <History />
+      <View style={styles.historyContainer}>{/* <History /> */}</View>
       <Text style={styles.developed}>Developed By Guna</Text>
     </View>
   );
@@ -31,6 +31,10 @@ const styles = StyleSheet.create({
   },
   avatar: {
     marginBottom: 24,
+  },
+  historyContainer: {
+    flex: 1,
+    width: "100%",
   },
   developed: {
     fontSize: 14,

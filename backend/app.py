@@ -15,16 +15,16 @@ def index():
 @app.route("/file-upload", methods=["POST"])
 def file_upload_api():
     try:
-        files = request.files['files']
+        files = request.files['file']
         result = file_upload(files)
 
         return jsonify({
-            "data": result
+            "success": True
         }), 200
     except Exception as e:
         print("error", e)
         return jsonify({
-            "error": True
+            "success": True
         }), 500
 
 @app.route("/chat", methods=["POST"])
@@ -32,7 +32,7 @@ def chat_api():
     try:
         # Get user message from the request body
         message = request.json.get('message')
-        stream = request.json.get('stream', True)
+        stream = request.json.get('stream', False)
 
         result = chat(message, stream)
 
@@ -45,7 +45,7 @@ def chat_api():
     except Exception as e:
         print("error", e)
         return jsonify({
-            "error": True
+            "success": False
         }), 500
     
 

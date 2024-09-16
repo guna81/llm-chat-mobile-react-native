@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { darkTheme } from "@/const/theme";
 import { selectMessages } from "@/store/slices/chatSlice";
 import { useDispatch, useSelector } from "react-redux";
+import Markdown from "react-native-markdown-display";
+import markdownStyles from "@/const/markdownStyles";
 
 const Conversation = ({}) => {
   const messages = useSelector(selectMessages);
@@ -42,9 +44,9 @@ const Message = ({ message }) => {
         </View>
       ) : (
         <View style={styles.messageAnswerContainer}>
-          <Text style={[styles.messageText, styles.messageAnswer]}>
-            {message.content}
-          </Text>
+          {/* <Text style={[styles.messageText, styles.messageAnswer]}> */}
+          <Markdown style={markdownStyles}>{message.content}</Markdown>
+          {/* </Text> */}
           <Text style={styles.messageTime}>{message.time}</Text>
         </View>
       )}
@@ -79,6 +81,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 8,
     alignSelf: "flex-end",
+    maxWidth: "100%",
   },
   messageAnswerContainer: {
     backgroundColor: darkTheme.answerBackground,
@@ -86,11 +89,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 8,
     alignSelf: "flex-start",
+    width: "100%",
   },
   messageQuestion: {
     color: darkTheme.primaryTextColor,
   },
-  messageAnswer: {
-    color: darkTheme.primaryTextColor,
-  },
+  // messageAnswer: {
+  //   color: darkTheme.primaryTextColor,
+  // },
 });

@@ -78,7 +78,7 @@ const ChatInput = () => {
         </TouchableOpacity>
       </View>
 
-      {/* <MediaInput /> */}
+      <MediaInput />
     </View>
   );
 };
