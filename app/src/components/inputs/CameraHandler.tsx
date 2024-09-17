@@ -14,7 +14,7 @@ import { ICON_SIZE, SUPPORTED_TYPES } from "@/const/const";
 
 import { useNavigation } from "@react-navigation/native";
 
-const CameraHandler = () => {
+const CameraHandler = ({ addDocument }: any) => {
   const navigation = useNavigation();
   // const [cameraOpened, setCameraOpened] = useState(false);
 

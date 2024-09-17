@@ -4,22 +4,30 @@ import * as DocumentPicker from "expo-document-picker";
 import { ICON_SIZE, SUPPORTED_TYPES } from "@/const/const";
 import MicHandler from "../inputs/MicHandler";
 import CameraHandler from "../inputs/CameraHandler";
+import FilePicker from "./FilePicker";
+import { useUploadFileMutation } from "@/store/services/chat";
 
 const MediaInput = () => {
+  const [uploadFile, { isLoading }] = useUploadFileMutation();
   const [selectedDocs, setSelectedDocs] = useState([]);
-  const handleChooseDocuments = async () => {
-    const result = await DocumentPicker.getDocumentAsync({
-      type: SUPPORTED_TYPES,
-      copyToCacheDirectory: false,
-    });
-    console.log({ result });
-    setSelectedDocs(result.assets);
+
+  const addDocument: any = async (doc) => {
+    // setSelectedDocs((prev) => [...prev, doc]);
+    const form = new FormData();
+    form.append("file", doc);
+    const res = await uploadFile(form);
+    console.log({ res });
+  };
+
+  const clearDocuments: any = () => {
+    setSelectedDocs([]);
   };
 
   return (
     <View style={styles.mediaInputContainer}>
-      <MicHandler />
-      <CameraHandler />
+      {/* <MicHandler /> */}
+      <CameraHandler addDocument={addDocument} />
+      <FilePicker addDocument={addDocument} />
     </View>
   );
 };
